@@ -5,19 +5,29 @@ public class FactureManager {
         double total = quantite * prixUnitaire;
 
         // reduction selon la catégorie
+
+        total -=total * reductionTypeProduit(typeProduit);
+
+        // reduction selon le total
+        return reductionTotal(total);
+    }
+
+    public double reductionTypeProduit (String typeProduit){
         if (typeProduit.equals("Alimentaire")) {
-            total -= total * 0.05; // Réduction de 5%
+            return 0.05; // Réduction de 5%
         } else if (typeProduit.equals("Electronique")) {
-            total -= total * 0.1; // Réduction de 10%
+            return 0.1; // Réduction de 10%
         } else if (typeProduit.equals("Luxe")) {
-            total -= total * 0.15; // Réduction de 15%
+            return 0.15; // Réduction de 15%
         }
+        return 1.0;
+    }
 
-        // Reduction sur le total
+    public double reductionTotal (double total){
         if (total > 1000) {
-            total -= total * 0.05; // Réduction supplémentaire de 5% pour les gros montants
+            return total - (total * 0.05); // Réduction supplémentaire de 5% pour les gros montants
         }
-
         return total;
     }
+
 }
